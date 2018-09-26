@@ -16,6 +16,7 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
     public MiniExplorerGUI() {
         initComponents();
         liExplorer.setModel(model);
+        model.add(".");
     }
 
     /**
@@ -32,6 +33,12 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        liExplorer.setFont(new java.awt.Font("Monospaced", 0, 13)); // NOI18N
+        liExplorer.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                liExplorerMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(liExplorer);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -47,6 +54,12 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void liExplorerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_liExplorerMouseClicked
+        if(evt.getClickCount() == 2){
+            model.goDeeper(this.liExplorer.getSelectedIndex());
+        }
+    }//GEN-LAST:event_liExplorerMouseClicked
 
     /**
      * @param args the command line arguments
