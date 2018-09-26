@@ -3,6 +3,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import javax.swing.AbstractListModel;
 
@@ -23,6 +24,7 @@ public class DateiModell extends AbstractListModel {
             gesamt.add(new Datei(name, pathname, changeDate, groesse));
             fireIntervalAdded(this, gesamt.size() - 1, gesamt.size() - 1);
         }
+        sort();
     }
 
     @Override
@@ -51,6 +53,26 @@ public class DateiModell extends AbstractListModel {
                 fireIntervalAdded(this, gesamt.size() - 1, gesamt.size() - 1);
             }
         }
+        sort();
+    }
+    
+    public void sort(){
+        ArrayList<Datei> directories = new ArrayList();
+        ArrayList<Datei> files = new ArrayList();
+        for (Datei datei : gesamt) {
+            if(datei.isDirectory()){
+                directories.add(datei);
+            }
+            else{
+                files.add(datei);
+            }
+        }
+        Collections.sort(directories, new FileComparer());
+        Collections.sort(files, new FileComparer());
+        gesamt.clear();
+        gesamt.addAll(directories);
+        gesamt.addAll(files);
+        fireContentsChanged(this, 0, gesamt.size()-1);
     }
 
 }

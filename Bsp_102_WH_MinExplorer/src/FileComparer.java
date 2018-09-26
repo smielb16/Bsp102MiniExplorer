@@ -3,11 +3,11 @@ import java.io.File;
 import java.util.Comparator;
 
 
-public class FileComparer implements Comparator<File>{
+public class FileComparer implements Comparator<Datei>{
 
     @Override
-    public int compare(File f1, File f2) {
-        return 0;
+    public int compare(Datei d1, Datei d2) {
+        return d1.getName().compareTo(d2.getName());
     }
     
 }
