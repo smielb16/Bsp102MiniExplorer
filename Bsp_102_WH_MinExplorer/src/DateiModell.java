@@ -21,7 +21,17 @@ public class DateiModell extends AbstractListModel {
             String name = f.getName();
             int groesse = (int) f.length();
             String pathname = f.getAbsolutePath();
-            gesamt.add(new Datei(name, pathname, changeDate, groesse));
+            String detail = "";
+            if (f.canRead()) {
+                detail += "R";
+            }
+            if (f.canRead()) {
+                detail += "W";
+            }
+            if (f.canExecute()) {
+                detail += "X";
+            }
+            gesamt.add(new Datei(name, pathname, changeDate, groesse, detail));
             fireIntervalAdded(this, gesamt.size() - 1, gesamt.size() - 1);
         }
         sort();
@@ -44,26 +54,35 @@ public class DateiModell extends AbstractListModel {
             for (File f : dir.listFiles()) {
                 String pathname = f.getAbsolutePath();
                 String name = f.getName();
+                String detail = "";
                 int groesse = (int) f.length();
                 LocalDateTime changeDate
-                    = LocalDateTime
-                            .ofEpochSecond(f
-                                    .lastModified() / 1000, 0, ZoneOffset.UTC);
-                gesamt.add(new Datei(name, pathname, changeDate, groesse));
+                        = LocalDateTime
+                                .ofEpochSecond(f
+                                        .lastModified() / 1000, 0, ZoneOffset.UTC);
+                if (f.canRead()) {
+                    detail += "R";
+                }
+                if (f.canRead()) {
+                    detail += "W";
+                }
+                if (f.canExecute()) {
+                    detail += "X";
+                }
+                gesamt.add(new Datei(name, pathname, changeDate, groesse, detail));
                 fireIntervalAdded(this, gesamt.size() - 1, gesamt.size() - 1);
             }
         }
         sort();
     }
-    
-    public void sort(){
+
+    public void sort() {
         ArrayList<Datei> directories = new ArrayList();
         ArrayList<Datei> files = new ArrayList();
         for (Datei datei : gesamt) {
-            if(datei.isDirectory()){
+            if (datei.isDirectory()) {
                 directories.add(datei);
-            }
-            else{
+            } else {
                 files.add(datei);
             }
         }
@@ -72,7 +91,7 @@ public class DateiModell extends AbstractListModel {
         gesamt.clear();
         gesamt.addAll(directories);
         gesamt.addAll(files);
-        fireContentsChanged(this, 0, gesamt.size()-1);
+        fireContentsChanged(this, 0, gesamt.size() - 1);
     }
 
 }

@@ -16,6 +16,7 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
     public MiniExplorerGUI() {
         initComponents();
         liExplorer.setModel(model);
+        liExplorer.setCellRenderer(new FileListRenderer());
         model.add(".");
     }
 
@@ -33,7 +34,7 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        liExplorer.setFont(new java.awt.Font("Monospaced", 0, 13)); // NOI18N
+        liExplorer.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
         liExplorer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 liExplorerMouseClicked(evt);
@@ -98,6 +99,6 @@ public class MiniExplorerGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> liExplorer;
+    private javax.swing.JList<Datei> liExplorer;
     // End of variables declaration//GEN-END:variables
 }
